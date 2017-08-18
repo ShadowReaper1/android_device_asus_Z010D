@@ -37,10 +37,11 @@
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
 
+#include <android-base/properties.h>
 #include "vendor_init.h"
 #include "property_service.h"
-#include "log.h"
-#include "util.h"
+
+using android::base::GetProperty;
 
 #define RAW_ID_PATH     "/sys/devices/soc0/raw_id"
 #define BUF_SIZE         64
@@ -65,7 +66,7 @@ static int read_file2(const char *fname, char *data, int max_size)
 
     fd = open(fname, O_RDONLY);
     if (fd < 0) {
-        ERROR("failed to open '%s'\n", fname);
+        ("failed to open '%s'\n", fname);
         return 0;
     }
 
@@ -77,6 +78,33 @@ static int read_file2(const char *fname, char *data, int max_size)
     close(fd);
 
     return 1;
+}
+
+static void init_alarm_boot_properties()
+{
+    int boot_reason;
+    FILE *fp;
+
+    fp = fopen("/proc/sys/kernel/boot_reason", "r");
+    fscanf(fp, "%d", &boot_reason);
+    fclose(fp);
+
+    /*
+     * Setup ro.alarm_boot value to true when it is RTC triggered boot up
+     * For existing PMIC chips, the following mapping applies
+     * for the value of boot_reason:
+     *
+     * 0 -> unknown
+     * 1 -> hard reset
+     * 2 -> sudden momentary power loss (SMPL)
+     * 3 -> real time clock (RTC)
+     * 4 -> DC charger inserted
+     * 5 -> USB charger inserted
+     * 6 -> PON1 pin toggled (for secondary PMICs)
+     * 7 -> CBLPWR_N pin toggled (for external power supply)
+     * 8 -> KPDPWR_N pin toggled (power key pressed)
+     */
+    property_set("ro.alarm_boot", boot_reason == 3 ? "true" : "false");
 }
 
 void property_override(char const prop[], char const value[])
@@ -153,6 +181,4 @@ void vendor_load_properties()
     else {
         property_set("ro.product.model", "Zenfone"); // this should never happen.
     }
-
-    INFO("Setting build properties for %s device of %s family\n", device, family);
 }
