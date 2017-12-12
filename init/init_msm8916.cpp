@@ -152,6 +152,10 @@ void vendor_load_properties()
     property_set("dalvik.vm.heapminfree", "2m");
     property_set("dalvik.vm.heapmaxfree", "8m");
 
+    /* Display Flicker Fix */
+    property_set("debug.hwui.use_buffer_age", "false");
+    property_set("ro.opengles.version", "196608");
+
     } else
 
     /* Z010DD  */
@@ -175,6 +179,9 @@ void vendor_load_properties()
     property_set("dalvik.vm.heaptargetutilization", "0.75");
     property_set("dalvik.vm.heapminfree", "512k");
     property_set("dalvik.vm.heapmaxfree", "2m");
+
+    /* Display Flicker Fix */
+    property_set("ro.opengles.version", "196610");
 
     }
 
