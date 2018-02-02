@@ -25,7 +25,11 @@ TARGET_OTA_ASSERT_DEVICE := Z010D,ASUS_Z010D,Z010DD,ASUS_Z010DD,Z010_2
 TARGET_BOARD_INFO_FILE := $(DEVICE_PATH)/board-info.txt
 
 # Kernel
+ifeq ($(ASUS_ZENMAX_MSM8939),true)
+TARGET_KERNEL_CONFIG := zc550kl_8939-custom_defconfig
+else
 TARGET_KERNEL_CONFIG := zc550kl-custom_defconfig
+endif
 
 # Properties
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
