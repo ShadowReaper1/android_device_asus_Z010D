@@ -33,5 +33,8 @@ TARGET_RECOVERY_DEVICE_MODULES := libinit_msm8916
 # Use Snapdragon LLVM, if available
 TARGET_USE_SDCLANG := true
 
+# Shipping API level (for CTS backward compatibility)
+PRODUCT_SHIPPING_API_LEVEL := 21
+
 # inherit from the proprietary version
 -include vendor/asus/Z010D/BoardConfigVendor.mk
