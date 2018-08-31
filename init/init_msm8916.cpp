@@ -144,7 +144,6 @@ void vendor_load_properties()
     /* Device Setting */
     family = "WW_Phone";
     device = "Z010D";
-
     sprintf(p_device, "ASUS_%s", device);
 
     property_override_dual("ro.product.device", "ro.vendor.product.device", p_device);
@@ -158,6 +157,9 @@ void vendor_load_properties()
     property_set("dalvik.vm.heaptargetutilization", "0.75");
     property_set("dalvik.vm.heapminfree", "2m");
     property_set("dalvik.vm.heapmaxfree", "8m");
+
+    // Init a dummy BT MAC address, will be overwritten later
+    property_set("ro.boot.btmacaddr", "00:00:00:00:00:00");
 
     /* Display Flicker Fix */
     property_set("debug.hwui.use_buffer_age", "false");
@@ -186,6 +188,9 @@ void vendor_load_properties()
     property_set("dalvik.vm.heaptargetutilization", "0.75");
     property_set("dalvik.vm.heapminfree", "512k");
     property_set("dalvik.vm.heapmaxfree", "2m");
+
+    // Init a dummy BT MAC address, will be overwritten later
+    property_set("ro.boot.btmacaddr", "00:00:00:00:00:00");
 
     /* Display Flicker Fix */
     property_set("ro.opengles.version", "196610");
