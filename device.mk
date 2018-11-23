@@ -31,9 +31,6 @@ TARGET_SCREEN_WIDTH := 720
 # Inherit from msm8916-common
 $(call inherit-product, device/asus/msm8916-common/msm8916.mk)
 
-PRODUCT_PACKAGES += \
-    init.target.rc
-
 PRODUCT_COPY_FILES += \
     device/asus/Z010D/audio/mixer_paths_mtp.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_mtp.xml
 
