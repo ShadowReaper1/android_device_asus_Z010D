@@ -162,7 +162,6 @@ void vendor_load_properties()
     property_set("ro.boot.btmacaddr", "00:00:00:00:00:00");
 
     /* Display Flicker Fix */
-    property_set("debug.hwui.use_buffer_age", "false");
     property_set("ro.opengles.version", "196608");
 
     } else
